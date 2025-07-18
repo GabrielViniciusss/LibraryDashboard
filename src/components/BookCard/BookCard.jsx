@@ -7,9 +7,8 @@ const BookCard = ({ book }) => {
     : null;
 
   return (
-    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' , width: '100%'}}>
+    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' , width: '100%', flexGrow: 1}}>
       {coverUrl ? (
-        // Se a URL da capa existe, renderiza a imagem
         <CardMedia
           component="img"
           sx={{ height: 280, objectFit: 'contain', pt: 1 }}
@@ -36,12 +35,7 @@ const BookCard = ({ book }) => {
           variant="h6"
           component="div"
           sx={{
-            wordBreak: 'break-word',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            display: '-webkit-box',
-            WebkitLineClamp: '5',
-            WebkitBoxOrient: 'vertical',
+            whiteSpace: 'pre-wrap', 
           }}
         >
           {book.title}

@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useBooks } from './hooks/useBooks';
 import useDebounce from './hooks/useDebounce';
-import BookCard from './components/BookCard/BookCard';
-import Loading from './components/Loading/Loading';
-import SearchBar from './components/SearchBar/SearchBar';
-import Pagination from './components/Pagination/Pagination';
-import { Container, Typography, AppBar, Toolbar,Box } from '@mui/material'; 
-import BookDetail from './components/BookDetail/BookDetail';
+import { Routes, Route, Link } from 'react-router-dom';
+
+import { Container, Typography, AppBar, Toolbar, Box, Button } from '@mui/material';
 import BookIcon from '@mui/icons-material/Book';
-import './index.css'; 
 import Footer from './components/Footer/Footer';
+import BookDetail from './components/BookDetail/BookDetail';
+
+import HomePage from './pages/HomePage/HomePage';
+import DataVisualizationPage from './pages/DataVisualization/DataVisualization';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+
+import './index.css';
 
 function App() {
   const { books, loading, error, pagination, searchBooks } = useBooks();
@@ -17,10 +20,8 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [startYear, setStartYear] = useState('');
   const [endYear, setEndYear] = useState('');
-  
   const [query, setQuery] = useState('*');
   const [currentPage, setCurrentPage] = useState(1);
-
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
@@ -36,22 +37,16 @@ function App() {
     }
 
     setQuery(newQuery + yearFilter);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   }, [debouncedSearchTerm, startYear, endYear]);
 
   useEffect(() => {
     searchBooks(query, currentPage);
   }, [query, currentPage, searchBooks]);
 
-
-  const handleOpenBookModal = (book) => {
-    setSelectedBook(book);
-  };
-
-  const handleCloseBookModal = () => {
-    setSelectedBook(null);
-  };
-
+  const handleOpenBookModal = (book) => setSelectedBook(book);
+  const handleCloseBookModal = () => setSelectedBook(null);
+  
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage]);
@@ -60,74 +55,71 @@ function App() {
     setCurrentPage(newPage);
   };
 
-  const renderContent = () => {
-    if (loading) {
-      return <Loading />;
-    }
-    if (error) {
-      return <Typography color="error" align="center" mt={5}>{error}</Typography>;
-    }
-    if (books.length === 0 && !loading) {
-      return <Typography align="center" mt={5}>Nenhum livro encontrado.</Typography>;
-    }
-
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8 items-stretch">
-        {books.map((book) => (
-          <BookCard key={book.key} book={book} onClick={() => handleOpenBookModal(book)} />
-        ))}
-      </div>
-    );
-  };
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <ScrollToTop />
       <AppBar
         position="sticky"
         sx={{
-          background: 'linear-gradient(to right, #ffedd5, #fdba74)', 
+          background: '#fff', 
           boxShadow: 3,
         }}
       >
         <Toolbar>
-          <BookIcon sx={{ mr: 2, color: 'black' }} /> 
+          <BookIcon sx={{ mr: 2, color: '#fb923c' }} /> 
           <Typography
             variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, fontFamily: 'Roboto Slab, serif', color: 'black' }} 
+            component={Link}
+            to="/"
+            sx={{
+              flexGrow: 1,
+              fontFamily: 'Roboto Slab, serif',
+              color: '#fb923c',
+              textDecoration: 'none',
+            }}
           >
             Dashboard de Livros
           </Typography>
         </Toolbar>
       </AppBar>
-      {/* Conteudo Principal */}
-      <Container sx={{ py: 4 }}>
-        <SearchBar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          startYear={startYear}
-          setStartYear={setStartYear}
-          endYear={endYear}
-          setEndYear={setEndYear}
-        />
 
-        {renderContent()}
-
-        <Pagination
-          currentPage={currentPage}
-          totalPages={pagination.totalPages}
-          onPageChange={handlePageChange}
-        />
-
-        <BookDetail 
-          open={!!selectedBook} 
-          onClose={handleCloseBookModal} 
-          book={selectedBook} 
-        />
+      <Container component="main" sx={{ py: 4, flexGrow: 1 }}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <HomePage
+                books={books}
+                loading={loading}
+                error={error}
+                pagination={pagination}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                startYear={startYear}
+                setStartYear={setStartYear}
+                endYear={endYear}
+                setEndYear={setEndYear}
+                currentPage={currentPage}
+                handlePageChange={handlePageChange}
+                handleOpenBookModal={handleOpenBookModal}
+              />
+            }
+          />
+          <Route
+            path="/visualizacao"
+            element={<DataVisualizationPage books={books} />}
+          />
+        </Routes>
       </Container>
-    <Footer />
-  </Box>
+
+      <Footer />
+
+      <BookDetail
+        open={!!selectedBook}
+        onClose={handleCloseBookModal}
+        book={selectedBook}
+      />
+    </Box>
   );
 }
-
 export default App;

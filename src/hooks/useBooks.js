@@ -1,11 +1,11 @@
 import { useState, useCallback } from 'react';
 import { fetchBooks as fetchBooksAPI } from '../services/openLibraryAPI';
 
-const BOOKS_PER_PAGE = 25;
+const BOOKS_PER_PAGE = 20;
 
 // Função para formatar textos (para os cards terem o mesmo tamanho e continuarem responsivos)
 const formatTextWithLineBreaks = (text) => {
-  const maxLineLength = 26; 
+  const maxLineLength = 25; 
   if (text.length <= maxLineLength) {
     return text;
   }

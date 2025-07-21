@@ -1,3 +1,4 @@
+import React from 'react';
 import { Card, CardContent, CardMedia, Typography, Box } from '@mui/material';
 import BookIcon from '@mui/icons-material/Book';
 
@@ -7,7 +8,7 @@ const BookCard = ({ book }) => {
     : null;
 
   return (
-    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' , width: '100%', flexGrow: 1}}>
+    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' , width: '100%'}}>
       {coverUrl ? (
         <CardMedia
           component="img"

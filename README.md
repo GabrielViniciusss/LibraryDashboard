@@ -4,20 +4,27 @@
 
 Este projeto é um dashboard web interativo e responsivo para pesquisar, filtrar e visualizar detalhes de livros, utilizando a API pública da [OpenLibrary](https://openlibrary.org/dev/docs/api/search). A aplicação foi desenvolvida como parte do desafio técnico para o processo seletivo de estágio em Front-End da V-lab.
 
-As principais funcionalidades implementadas são:
+As principais funcionalidades e diferenciais implementados são:
+* **Arquitetura Multi-Página:** Utilização do `react-router-dom` para criar uma navegação fluida entre a página principal e a de visualização de dados.
 * **Busca Dinâmica:** Pesquisa em tempo real por título ou autor com debounce para otimização de performance.
 * **Filtros Avançados:** Filtragem de resultados por ano de publicação.
-* **Paginação Completa:** Navegação entre as páginas de resultados com botões de Primeira, Anterior, Próxima e Última.
-* **Detalhes do Livro:** Exibição de informações detalhadas (capa, autor, ano, editora, nº de páginas) em um modal ao clicar em um livro.
+* **Visualização de Dados:** Uma página dedicada com gráficos interativos (gerados com Chart.js) que analisam os livros da página atual, mostrando a distribuição por década e os autores mais frequentes.
+* **Paginação Completa:** Navegação entre as páginas de resultados com uma interface clara e funcional.
+* **Detalhes do Livro:** Exibição de informações detalhadas em um modal customizado e estilizado.
 * **UI Moderna:** Interface com skeleton loading para feedback visual durante o carregamento e um design customizado combinando Material-UI e Tailwind CSS.
-* **Comunicação Resiliente com a API:** Mecanismo de retentativas automáticas para lidar com instabilidades temporárias da API.
+* **Testes Unitários:** Cobertura de testes para componentes e fluxos principais da aplicação utilizando Jest e React Testing Library.
+* **Documentação de Componentes:** Utilização do Storybook para documentar e desenvolver o componente `BookCard` de forma isolada.
 
 ## Tecnologias Utilizadas
 
 * **Frontend:** React 18 (com Hooks)
+* **Roteamento:** React Router DOM v6
 * **Build Tool:** Vite
 * **UI Components:** Material-UI 5+
 * **Estilização Utilitária:** Tailwind CSS
+* **Gráficos:** Chart.js (com react-chartjs-2)
+* **Testes:** Jest & React Testing Library
+* **Documentação de Componentes:** Storybook
 * **Cliente HTTP:** Axios
 * **Ícones:** Material Icons
 
@@ -52,6 +59,8 @@ Para executar este projeto localmente, siga os passos abaixo:
 
 * `npm run dev`: Inicia a aplicação em modo de desenvolvimento.
 * `npm run build`: Compila a aplicação para produção.
+* `npm test`: Executa a suíte de testes com Jest.
+* `npm run storybook`: Inicia o ambiente do Storybook para visualização de componentes.
 * `npm run lint`: Executa o linter para análise de código.
 * `npm run preview`: Inicia um servidor local para visualizar a build de produção.
 
@@ -59,18 +68,18 @@ Para executar este projeto localmente, siga os passos abaixo:
 
 Durante o desenvolvimento, algumas decisões foram tomadas para garantir a qualidade, manutenibilidade e experiência do usuário:
 
-* **Arquitetura de Pastas:** O projeto foi estruturado com uma clara separação de responsabilidades (`components`, `hooks`, `services`), facilitando a navegação e a manutenção do código.
-* **Gerenciamento de Estado:** O estado foi gerenciado localmente nos componentes com os hooks do React (`useState`, `useEffect`). A lógica de busca e os estados relacionados (dados, loading, erro, paginação) foram encapsulados no hook customizado `useBooks`, desacoplando a lógica de negócio dos componentes de UI.
-* **UI Híbrida (Material-UI + Tailwind CSS):** Foi adotada uma abordagem híbrida para a UI. O Material-UI foi utilizado por seus componentes robustos e prontos para uso (`Dialog`, `AppBar`, `Button`, `Skeleton`), enquanto o Tailwind CSS foi empregado para a estilização customizada e responsiva do layout principal (grid) e dos cards, proporcionando maior flexibilidade e um design único.
-* **Resiliência da API:** Para lidar com a instabilidade da API da OpenLibrary (erros `503`), foi implementada uma camada de serviço com Axios que possui uma lógica de retentativas automáticas. Isso garante que a aplicação continue tentando buscar os dados por até um minuto antes de exibir uma mensagem de erro, melhorando a robustez da aplicação.
-* **Performance da Busca:** O hook `useDebounce` foi criado para gerenciar o input do usuário na barra de busca. Isso evita que uma nova chamada à API seja feita a cada tecla digitada, disparando a busca apenas quando o usuário para de digitar, o que otimiza o uso da API e melhora a performance geral.
+* **Arquitetura Multi-Página (SPA):** A decisão de usar `react-router-dom` permitiu uma clara separação entre a página principal de busca e a página de análise de dados, criando uma experiência de navegação mais intuitiva e organizada.
+* **Gerenciamento de Estado Centralizado:** O estado global (lista de livros, paginação, filtros) foi mantido no componente `App.jsx`, que atua como um "provedor" para as páginas filhas. Isso simplifica o fluxo de dados e evita a necessidade de bibliotecas de gerenciamento de estado mais complexas para um projeto deste escopo.
+* **UI Híbrida (Material-UI + Tailwind CSS):** Foi adotada uma abordagem híbrida para a UI. O Material-UI foi utilizado por seus componentes robustos e funcionais (`Dialog`, `AppBar`, `Skeleton`), enquanto o Tailwind CSS foi empregado para a estilização customizada e responsiva do layout principal e dos cards, proporcionando maior flexibilidade e um design único.
+* **Testes Focados no Comportamento:** A estratégia de testes focou em validar o comportamento da aplicação do ponto de vista do usuário (renderização de estados de loading/erro, funcionamento da busca), garantindo que as funcionalidades principais estão robustas.
 
-## Próximos Passos
+## Próximos Passos: 
 
-Com mais tempo de desenvolvimento, as seguintes melhorias e funcionalidades poderiam ser implementadas:
-
-* **Testes Unitários e de Integração:** Adicionar uma suíte de testes com React Testing Library e Jest para garantir a confiabilidade dos componentes e hooks.
-* **Storybook:** Documentar os componentes da UI (`BookCard`, `Pagination`, `SearchBar`) com o Storybook para facilitar o desenvolvimento isolado e criar um guia de estilo visual.
-* **Filtro por Idioma:** Implementar o filtro por idioma, conforme sugerido nas funcionalidades extras do desafio.
-* **Funcionalidade de Favoritos:** Criar um sistema que permita ao usuário marcar livros como favoritos, com os dados persistidos no `localStorage`.
-* **Otimização de Performance:** Implementar virtualização na lista de livros para renderizar de forma eficiente um número muito grande de resultados sem degradar a performance.
+* **Filtros Avançados:**
+    * Substituir os campos de texto de ano por um componente de `range slider` para uma melhor UX.
+    * Adicionar um filtro por idioma utilizando o parâmetro `language` da API.
+    * Implementar opções de ordenação dos resultados (relevância, data, título).
+* **Funcionalidade de Favoritos:**
+    * Criar um sistema que permita ao usuário marcar livros como favoritos.
+    * Persistir a lista de favoritos entre sessões utilizando `localStorage`.
+    * Exibir um contador de livros favoritados no header.

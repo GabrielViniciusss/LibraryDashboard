@@ -66,20 +66,30 @@ function App() {
         }}
       >
         <Toolbar>
-          <BookIcon sx={{ mr: 2, color: '#fb923c' }} /> 
-          <Typography
-            variant="h6"
+          <Box
             component={Link}
             to="/"
             sx={{
-              flexGrow: 1,
-              fontFamily: 'Roboto Slab, serif',
-              color: '#fb923c',
+              display: 'flex',
+              alignItems: 'center',
               textDecoration: 'none',
+              color: '#fb923c',
+              mr: 2,
+              '&:hover': { opacity: 0.8 },
             }}
           >
-            Dashboard de Livros
-          </Typography>
+            <BookIcon sx={{ mr: 1, color: '#fb923c' }} />
+            <Typography
+              variant="h6"
+              sx={{
+                fontFamily: 'Roboto Slab, serif',
+                color: '#fb923c',
+                fontWeight: 700,
+              }}
+            >
+              V-library
+            </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
 

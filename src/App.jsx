@@ -5,10 +5,11 @@ import BookCard from './components/BookCard/BookCard';
 import Loading from './components/Loading/Loading';
 import SearchBar from './components/SearchBar/SearchBar';
 import Pagination from './components/Pagination/Pagination';
-import { Container, Typography, AppBar, Toolbar } from '@mui/material'; 
+import { Container, Typography, AppBar, Toolbar,Box } from '@mui/material'; 
 import BookDetail from './components/BookDetail/BookDetail';
 import BookIcon from '@mui/icons-material/Book';
 import './index.css'; 
+import Footer from './components/Footer/Footer';
 
 function App() {
   const { books, loading, error, pagination, searchBooks } = useBooks();
@@ -77,7 +78,7 @@ function App() {
   };
 
   return (
-    <>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <AppBar
         position="sticky"
         sx={{
@@ -121,7 +122,8 @@ function App() {
           book={selectedBook} 
         />
       </Container>
-    </>
+    <Footer />
+  </Box>
   );
 }
 

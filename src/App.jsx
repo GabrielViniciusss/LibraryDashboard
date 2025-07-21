@@ -18,10 +18,14 @@ import './index.css';
 function App() {
   const { books, loading, error, pagination, searchBooks } = useBooks();
   const [selectedBook, setSelectedBook] = useState(null);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [startYear, setStartYear] = useState('');
   const [endYear, setEndYear] = useState('');
   const [query, setQuery] = useState('*');
+  const [language, setLanguage] = useState('');
+  const [sortBy, setSortBy] = useState('');
+
   const [currentPage, setCurrentPage] = useState(1);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
@@ -51,8 +55,8 @@ function App() {
   }, [debouncedSearchTerm, startYear, endYear]);
 
   useEffect(() => {
-    searchBooks(query, currentPage);
-  }, [query, currentPage, searchBooks]);
+    searchBooks(query, currentPage, language, sortBy);
+  }, [query, currentPage, searchBooks, language, sortBy]);
 
   const handleOpenBookModal = (book) => setSelectedBook(book);
   const handleCloseBookModal = () => setSelectedBook(null);
@@ -144,6 +148,10 @@ function App() {
                 handleOpenBookModal={handleOpenBookModal}
                 favorites={favorites}
                 handleToggleFavorite={handleToggleFavorite}
+                language={language}
+                setLanguage={setLanguage}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
               />
             }
           />

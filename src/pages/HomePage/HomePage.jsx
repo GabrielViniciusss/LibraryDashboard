@@ -23,6 +23,10 @@ const HomePage = ({
   handleOpenBookModal,
   favorites,
   handleToggleFavorite,
+  language,
+  setLanguage,
+  sortBy,
+  setSortBy,
 }) => {
   const renderContent = () => {
     if (loading) {
@@ -62,6 +66,10 @@ const HomePage = ({
         setStartYear={setStartYear}
         endYear={endYear}
         setEndYear={setEndYear}
+        language={language}
+        setLanguage={setLanguage}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
       />
       
       {books.length > 0 && !loading && (

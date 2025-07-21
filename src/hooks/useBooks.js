@@ -37,15 +37,14 @@ export const useBooks = () => {
     totalResults: 0,
   });
 
-  const searchBooks = useCallback(async (query, page = 1) => {
+  const searchBooks = useCallback(async (query, page = 1, lang, sort) => {
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchBooksAPI(query, page, BOOKS_PER_PAGE);
-
+      const data = await fetchBooksAPI(query, page, BOOKS_PER_PAGE, lang, sort);
+      
       const formattedBooks = data.docs.map(book => {
         const authorsString = book.author_name?.join(', ') || 'Autor Desconhecido';
-
         return {
           ...book,
           title: formatTextWithLineBreaks(book.title),
@@ -54,6 +53,7 @@ export const useBooks = () => {
       });
 
       setBooks(formattedBooks || []);
+      
       setPagination({
         currentPage: page,
         totalPages: Math.ceil(data.num_found / BOOKS_PER_PAGE),
@@ -63,7 +63,6 @@ export const useBooks = () => {
     } catch (err) {
       setError('Não foi possível buscar os livros. Tente novamente mais tarde.');
       setBooks([]);
-      console.log(err);
     } finally {
       setLoading(false);
     }

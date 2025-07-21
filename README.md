@@ -73,3 +73,10 @@ Durante o desenvolvimento, algumas decisões foram tomadas para garantir a quali
 * **Gerenciamento de Estado Centralizado:** O estado global (lista de livros, paginação, filtros) foi mantido no componente `App.jsx`, que atua como um "provedor" para as páginas filhas. Isso simplifica o fluxo de dados e evita a necessidade de bibliotecas de gerenciamento de estado mais complexas para um projeto deste escopo.
 * **UI Híbrida (Material-UI + Tailwind CSS):** Foi adotada uma abordagem híbrida para a UI. O Material-UI foi utilizado por seus componentes robustos e funcionais (`Dialog`, `AppBar`, `Skeleton`), enquanto o Tailwind CSS foi empregado para a estilização customizada e responsiva do layout principal e dos cards, proporcionando maior flexibilidade e um design único.
 * **Testes Focados no Comportamento:** A estratégia de testes focou em validar o comportamento da aplicação do ponto de vista do usuário (renderização de estados de loading/erro, funcionamento da busca), garantindo que as funcionalidades principais estão robustas.
+
+## Próximos Passos: 
+
+* **Busca Avançada:**
+    * Histórico de buscas recentes 
+    * Sugestões de busca 
+    * Busca combinada: título + autor 

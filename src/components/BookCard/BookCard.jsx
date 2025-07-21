@@ -1,11 +1,18 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Typography, Box, CardActionArea } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Box, CardActionArea, IconButton } from '@mui/material';
 import BookIcon from '@mui/icons-material/Book';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-const BookCard = ({ book, onClick }) => { 
-  const coverUrl = book.cover_i 
-    ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg` 
+const BookCard = ({ book, onClick, isFavorite, onToggleFavorite }) => {
+  const coverUrl = book.cover_i
+    ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
     : null;
+
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation(); 
+    onToggleFavorite();
+  };
 
   return (
     <div
@@ -13,7 +20,7 @@ const BookCard = ({ book, onClick }) => {
         rounded-xl shadow-md transition-transform duration-200 
         hover:scale-105 hover:shadow-lg bg-white
         border border-orange-100
-        h-full w-full flex flex-col
+        h-full w-full flex flex-col relative
       "
       style={{ minHeight: 370 }}
     >
@@ -37,7 +44,7 @@ const BookCard = ({ book, onClick }) => {
               component="img"
               sx={{ height: 180, objectFit: 'cover', borderRadius: '0.75rem 0.75rem 0 0' }}
               image={coverUrl}
-              alt={`Capa do livro ${book.title}`} 
+              alt={`Capa do livro ${book.title}`}
             />
           ) : (
             <Box
@@ -53,14 +60,14 @@ const BookCard = ({ book, onClick }) => {
               <BookIcon sx={{ fontSize: 64, color: 'grey.500' }} />
             </Box>
           )}
-          
-          <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 2 }}>
+
+          <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 2, position: 'relative' }}>
             <Typography
               gutterBottom
               variant="subtitle1"
               component="div"
               sx={{
-                whiteSpace: 'pre-wrap', 
+                whiteSpace: 'pre-wrap',
                 fontWeight: 600,
                 fontSize: 16,
                 mb: 1,
@@ -69,12 +76,27 @@ const BookCard = ({ book, onClick }) => {
               {book.title}
             </Typography>
 
+            <Box sx={{ flexGrow: 1 }} />
+
             <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'pre-wrap', mb: 1 }} >
               {book.author_name}
             </Typography>
             <Typography variant="caption" color="text.secondary">
               Ano: {book.first_publish_year}
             </Typography>
+
+            <IconButton
+              aria-label="adicionar aos favoritos"
+              onClick={handleFavoriteClick}
+              sx={{
+                position: 'absolute',
+                bottom: 8,
+                right: 8,
+                color: isFavorite ? '#f97316' : '#fdba74', 
+              }}
+            >
+              {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            </IconButton>
           </CardContent>
         </Card>
       </CardActionArea>
@@ -89,6 +111,9 @@ BookCard.defaultProps = {
     author_name: 'Autor Desconhecido',
     first_publish_year: 'N/A',
   },
+  isFavorite: false,
+  onToggleFavorite: () => {},
+  onClick: () => {},
 };
 
 export default BookCard;

@@ -21,6 +21,8 @@ const HomePage = ({
   currentPage,
   handlePageChange,
   handleOpenBookModal,
+  favorites,
+  handleToggleFavorite,
 }) => {
   const renderContent = () => {
     if (loading) {
@@ -35,9 +37,18 @@ const HomePage = ({
 
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8 items-stretch">
-        {books.map((book) => (
-          <BookCard key={book.key} book={book} onClick={() => handleOpenBookModal(book)} />
-        ))}
+        {books.map((book) => {
+          const isFavorite = favorites.some(favBook => favBook.key === book.key);
+          return (
+            <BookCard
+              key={book.key}
+              book={book}
+              isFavorite={isFavorite}
+              onToggleFavorite={() => handleToggleFavorite(book)}
+              onClick={() => handleOpenBookModal(book)}
+            />
+          );
+        })}
       </div>
     );
   };

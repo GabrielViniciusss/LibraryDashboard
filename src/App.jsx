@@ -3,8 +3,9 @@ import { useBooks } from './hooks/useBooks';
 import useDebounce from './hooks/useDebounce';
 import { Routes, Route, Link } from 'react-router-dom';
 
-import { Container, Typography, AppBar, Toolbar, Box, Button } from '@mui/material';
+import { Container, Typography, AppBar, Toolbar, Box, Button, IconButton, Badge } from '@mui/material';
 import BookIcon from '@mui/icons-material/Book';
+import FavoriteIcon from '@mui/icons-material/Favorite'; 
 import Footer from './components/Footer/Footer';
 import BookDetail from './components/BookDetail/BookDetail';
 
@@ -24,7 +25,16 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-   useEffect(() => {
+  const [favorites, setFavorites] = useState(() => {
+    const storedFavorites = localStorage.getItem('vlab-favorite-books');
+    return storedFavorites ? JSON.parse(storedFavorites) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('vlab-favorite-books', JSON.stringify(favorites));
+  }, [favorites]);
+
+  useEffect(() => {
     const newQuery = debouncedSearchTerm.trim() || '*';
     let yearFilter = '';
 
@@ -53,6 +63,17 @@ function App() {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+  };
+
+  const handleToggleFavorite = (bookToToggle) => {
+    setFavorites((prevFavorites) => {
+      const isFavorited = prevFavorites.some(book => book.key === bookToToggle.key);
+      if (isFavorited) {
+        return prevFavorites.filter(book => book.key !== bookToToggle.key);
+      } else {
+        return [...prevFavorites, bookToToggle];
+      }
+    });
   };
 
   return (
@@ -90,6 +111,15 @@ function App() {
               V-library
             </Typography>
           </Box>
+          
+          <Box sx={{ flexGrow: 1 }} /> 
+
+          {/* Contador de favoritos */}
+          <IconButton sx={{ color: '#fb923c' }}>
+            <Badge badgeContent={favorites.length} color="primary">
+              <FavoriteIcon />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </AppBar>
 
@@ -112,6 +142,8 @@ function App() {
                 currentPage={currentPage}
                 handlePageChange={handlePageChange}
                 handleOpenBookModal={handleOpenBookModal}
+                favorites={favorites}
+                handleToggleFavorite={handleToggleFavorite}
               />
             }
           />

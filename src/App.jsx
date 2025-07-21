@@ -5,7 +5,7 @@ import BookCard from './components/BookCard/BookCard';
 import Loading from './components/Loading/Loading';
 import SearchBar from './components/SearchBar/SearchBar';
 import Pagination from './components/Pagination/Pagination';
-import { Container, Typography, Grid, AppBar, Toolbar } from '@mui/material'; 
+import { Container, Typography, AppBar, Toolbar } from '@mui/material'; 
 import BookDetail from './components/BookDetail/BookDetail';
 import BookIcon from '@mui/icons-material/Book';
 import './index.css'; 
@@ -57,25 +57,22 @@ function App() {
   };
 
   const renderContent = () => {
-    if (loading) { return <Loading />; }
-    if (error) { return <Typography color="error" align="center" mt={5}>{error}</Typography>; }
-    if (books.length === 0 && !loading) { return <Typography align="center" mt={5}>Nenhum livro encontrado.</Typography>; }
-    
+    if (loading) {
+      return <Loading />;
+    }
+    if (error) {
+      return <Typography color="error" align="center" mt={5}>{error}</Typography>;
+    }
+    if (books.length === 0 && !loading) {
+      return <Typography align="center" mt={5}>Nenhum livro encontrado.</Typography>;
+    }
+
     return (
-      <Grid container spacing={4} mt={2} justifyContent="center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8 items-stretch">
         {books.map((book) => (
-          <Grid 
-            key={book.key} 
-            xs={12} 
-            sm={6} 
-            md={3} 
-            lg={3} 
-            sx={{ display: 'flex' }}
-          >
-          <BookCard book={book} onClick={() => handleOpenBookModal(book)} />
-          </Grid>
+          <BookCard key={book.key} book={book} onClick={() => handleOpenBookModal(book)} />
         ))}
-      </Grid>
+      </div>
     );
   };
 
@@ -84,7 +81,7 @@ function App() {
       <AppBar
         position="sticky"
         sx={{
-          background: 'linear-gradient(to right, #ffedd5, #fdba74)', // cores do orange-500 e orange-300
+          background: 'linear-gradient(to right, #ffedd5, #fdba74)', 
           boxShadow: 3,
         }}
       >

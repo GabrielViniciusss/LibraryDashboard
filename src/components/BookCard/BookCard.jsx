@@ -8,52 +8,77 @@ const BookCard = ({ book, onClick }) => {
     : null;
 
   return (
-    <CardActionArea onClick={onClick} sx={{ height: '100%' }}>
-      <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' , width: '100%'}}>
-        {coverUrl ? (
-          <CardMedia
-            component="img"
-            sx={{ height: 280, objectFit: 'contain', pt: 1 }}
-            image={coverUrl}
-            alt={`Capa do livro ${book.title}`} 
-          />
-        ) : (
-          <Box
-            sx={{
-              height: 280,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'grey.200',
-            }}
-          >
-            <BookIcon sx={{ fontSize: 80, color: 'grey.500' }} />
-          </Box>
-        )}
-        
-        <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-          <Typography
-            gutterBottom
-            variant="h6"
-            component="div"
-            sx={{
-              whiteSpace: 'pre-wrap', 
-            }}
-          >
-            {book.title}
-          </Typography>
-
-          <Box sx={{ flexGrow: 1 }} /> 
+    <div
+      className="
+        rounded-xl shadow-md transition-transform duration-200 
+        hover:scale-105 hover:shadow-lg bg-white
+        border border-orange-100
+        h-full w-full flex flex-col
+      "
+      style={{ minHeight: 370 }}
+    >
+      <CardActionArea
+        onClick={onClick}
+        sx={{ height: '100%', borderRadius: 'inherit', flex: 1, display: 'flex', flexDirection: 'column' }}
+      >
+        <Card
+          sx={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            boxShadow: 'none',
+            borderRadius: 'inherit',
+            background: 'transparent',
+          }}
+        >
+          {coverUrl ? (
+            <CardMedia
+              component="img"
+              sx={{ height: 180, objectFit: 'cover', borderRadius: '0.75rem 0.75rem 0 0' }}
+              image={coverUrl}
+              alt={`Capa do livro ${book.title}`} 
+            />
+          ) : (
+            <Box
+              sx={{
+                height: 180,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'grey.200',
+                borderRadius: '0.75rem 0.75rem 0 0',
+              }}
+            >
+              <BookIcon sx={{ fontSize: 64, color: 'grey.500' }} />
+            </Box>
+          )}
           
-          <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'pre-wrap' }} >
-            {book.author_name}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Ano: {book.first_publish_year}
-          </Typography>
-        </CardContent>
-      </Card>
-    </CardActionArea>
+          <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 2 }}>
+            <Typography
+              gutterBottom
+              variant="subtitle1"
+              component="div"
+              sx={{
+                whiteSpace: 'pre-wrap', 
+                fontWeight: 600,
+                fontSize: 16,
+                mb: 1,
+              }}
+            >
+              {book.title}
+            </Typography>
+
+            <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'pre-wrap', mb: 1 }} >
+              {book.author_name}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Ano: {book.first_publish_year}
+            </Typography>
+          </CardContent>
+        </Card>
+      </CardActionArea>
+    </div>
   );
 };
 

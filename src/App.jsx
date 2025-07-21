@@ -52,9 +52,12 @@ function App() {
     setSelectedBook(null);
   };
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const renderContent = () => {
@@ -109,6 +112,7 @@ function App() {
         />
 
         {renderContent()}
+
         <Pagination
           currentPage={currentPage}
           totalPages={pagination.totalPages}

@@ -24,7 +24,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  useEffect(() => {
+   useEffect(() => {
     const newQuery = debouncedSearchTerm.trim() || '*';
     let yearFilter = '';
 

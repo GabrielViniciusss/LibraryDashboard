@@ -54,7 +54,7 @@ function App() {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-    window.scrollTo(0, 0); 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const renderContent = () => {
@@ -109,9 +109,8 @@ function App() {
         />
 
         {renderContent()}
-
-        <Pagination 
-          currentPage={pagination.currentPage}
+        <Pagination
+          currentPage={currentPage}
           totalPages={pagination.totalPages}
           onPageChange={handlePageChange}
         />

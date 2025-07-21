@@ -5,7 +5,7 @@ const BOOKS_PER_PAGE = 25;
 
 // Função para formatar textos (para os cards terem o mesmo tamanho e continuarem responsivos)
 const formatTextWithLineBreaks = (text) => {
-  const maxLineLength = 35; 
+  const maxLineLength = 26; 
   if (text.length <= maxLineLength) {
     return text;
   }

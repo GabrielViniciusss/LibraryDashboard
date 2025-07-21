@@ -43,8 +43,8 @@ const BookCard = ({ book }) => {
 
         <Box sx={{ flexGrow: 1 }} /> 
         
-        <Typography variant="body2" color="text.secondary">
-          {book.author_name?.join(', ')}
+        <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'pre-wrap' }} >
+          {book.author_name}
         </Typography>
         <Typography variant="caption" color="text.secondary">
           Ano: {book.first_publish_year}
@@ -58,7 +58,7 @@ BookCard.defaultProps = {
   book: {
     cover_i: null,
     title: 'Título Indisponível',
-    author_name: ['Autor Desconhecido'],
+    author_name: 'Autor Desconhecido',
     first_publish_year: 'N/A',
   },
 };

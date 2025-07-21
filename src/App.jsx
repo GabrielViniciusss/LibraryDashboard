@@ -26,10 +26,10 @@ function App() {
     
     // Grid de livros
     return (
-      <Grid container spacing={4} mt={2}>
-        {books.map((book) => ( 
-          //1 card por linha em telas muito pequenas, 2 em telas pequenas, 3 em telas grandes e médias.
-          <Grid item key={book.key} xs={12} sm={6} md={4} lg={4} sx={{ display: 'flex'}}> 
+      <Grid container spacing={4} mt={2} justifyContent="center">
+        {books.map((book) => (
+          // 4 cards por linha em telas médias e grandes
+          <Grid item key={book.key} xs={12} sm={6} md={3} lg={3} sx={{ display: 'flex' }}>
             <BookCard book={book} />
           </Grid>
         ))}

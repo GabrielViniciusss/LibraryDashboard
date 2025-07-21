@@ -18,10 +18,10 @@ export const fetchBooks = async (query, page = 1, limit = 20, lang, sort) => {
   };
 
   if (lang) {
-    params.lang = lang;
+    params.language = lang; 
   }
   if (sort) {
-    params.sort = sort;
+    params.sort = sort; 
   }
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {

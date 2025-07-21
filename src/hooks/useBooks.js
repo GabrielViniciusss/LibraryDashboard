@@ -62,6 +62,7 @@ export const useBooks = () => {
 
     } catch (err) {
       setError('Não foi possível buscar os livros. Tente novamente mais tarde.');
+      console.log(err);
       setBooks([]);
     } finally {
       setLoading(false);

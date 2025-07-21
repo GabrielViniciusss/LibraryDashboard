@@ -39,18 +39,18 @@ function App() {
   }, [favorites]);
 
   useEffect(() => {
-    const newQuery = debouncedSearchTerm.trim() || '*';
-    let yearFilter = '';
+    let queryString = debouncedSearchTerm.trim() || '*';
 
+    // Ano de publicação
     if (startYear && endYear) {
-      yearFilter = ` AND first_publish_year:[${startYear} TO ${endYear}]`;
+      queryString += ` AND first_publish_year:[${startYear} TO ${endYear}]`;
     } else if (startYear) {
-      yearFilter = ` AND first_publish_year:[${startYear} TO *]`;
+      queryString += ` AND first_publish_year:[${startYear} TO *]`;
     } else if (endYear) {
-      yearFilter = ` AND first_publish_year:[* TO ${endYear}]`;
+      queryString += ` AND first_publish_year:[* TO ${endYear}]`;
     }
 
-    setQuery(newQuery + yearFilter);
+    setQuery(queryString);
     setCurrentPage(1);
   }, [debouncedSearchTerm, startYear, endYear]);
 

@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useBooks } from './hooks/useBooks';
 import BookCard from './components/BookCard/BookCard';
-import { Container, Typography, CircularProgress, Box, Grid } from '@mui/material'; 
+import Loading from './components/Loading/Loading';
+import { Container, Typography, Grid } from '@mui/material'; 
 
 function App() {
   const { books, loading, error, searchBooks } = useBooks();
@@ -12,11 +13,7 @@ function App() {
 
   const renderContent = () => {
     if (loading) {
-      return (
-        <Box display="flex" justifyContent="center" my={5}>
-          <CircularProgress />
-        </Box>
-      );
+      return <Loading />;
     }
     
     if (error) {

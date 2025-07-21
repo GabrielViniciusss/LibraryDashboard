@@ -39,7 +39,15 @@ function App() {
   }, [favorites]);
 
   useEffect(() => {
-    let queryString = debouncedSearchTerm.trim() || '*';
+    const trimmedTerm = debouncedSearchTerm.trim();
+
+    let queryString = '';
+
+    if (trimmedTerm) {
+      queryString = `title_suggest:"${trimmedTerm}" OR author:"${trimmedTerm}"`;
+    } else {
+      queryString = '*';
+    }
 
     // Ano de publicação
     if (startYear && endYear) {

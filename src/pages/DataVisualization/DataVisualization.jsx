@@ -73,12 +73,34 @@ const DataVisualizationPage = ({ books }) => {
 
   return (
     <Container>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
-        <BarChartIcon sx={{ fontSize: 36, color: '#fb923c' }} />
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
-          Análise da Página
-        </Typography>
+      {/* MODIFICAÇÃO AQUI: O Box do título agora alinha os itens nas extremidades */}
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+        {/* Agrupamos o ícone e o título para mantê-los juntos */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <BarChartIcon sx={{ fontSize: 36, color: '#fb923c' }} />
+          <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
+            Visualização de Dados
+          </Typography>
+        </Box>
+        {/* Adicionamos o botão de voltar aqui no topo */}
+        <Button
+          component={Link}
+          to="/"
+          variant="outlined"
+          startIcon={<ArrowBackIcon />}
+          sx={{
+            borderColor: '#fb923c',
+            color: '#fb923c',
+            '&:hover': {
+              borderColor: '#f97316',
+              backgroundColor: 'rgba(251, 146, 60, 0.04)',
+            },
+          }}
+        >
+          Voltar ao Dashboard
+        </Button>
       </Box>
+
       <Typography variant="subtitle1" sx={{ color: 'text.secondary', mb: 4 }}>
         Estes gráficos representam uma análise dos {books.length} livros visíveis na página atual do dashboard.
       </Typography>
